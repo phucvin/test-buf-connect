@@ -8,13 +8,13 @@ import (
 	"google.golang.org/protobuf/types/known/anypb"
 
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	greetv1 "testbufconnect/gen/greet/v1"
-	"testbufconnect/gen/greet/v1/greetv1connect"
+	anyservice "testbufconnect/gen/anyservice"
+	"testbufconnect/gen/anyservice/anyserviceconnect"
 
 	"github.com/bufbuild/connect-go"
 )
 
-func call(client greetv1connect.ServiceClient, req protoreflect.ProtoMessage, res protoreflect.ProtoMessage) error {
+func call(client anyserviceconnect.ServiceClient, req protoreflect.ProtoMessage, res protoreflect.ProtoMessage) error {
 	reqMsg, err := anypb.New(req)
 	if err != nil {
 		return err
@@ -34,12 +34,12 @@ func call(client greetv1connect.ServiceClient, req protoreflect.ProtoMessage, re
 }
 
 func main() {
-	client := greetv1connect.NewServiceClient(
+	client := anyserviceconnect.NewServiceClient(
 		http.DefaultClient,
 		"http://localhost:8080",
 	)
-	res := new(greetv1.GreetResponse)
-	err := call(client, &greetv1.GreetRequest{
+	res := new(anyservice.GreetResponse)
+	err := call(client, &anyservice.GreetRequest{
 		Name: "Bob",
 	}, res)
 	if err != nil {
