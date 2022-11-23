@@ -22,13 +22,18 @@ func (s *ServiceServer) Call(
     req *connect.Request[anypb.Any],
 ) (*connect.Response[anypb.Any], error) {
     log.Println("Request headers: ", req.Header())
-	any, err := anypb.New(&greetv1.GreetResponse{
-        Greeting: fmt.Sprintf("Hello, %s!", "TODO"),
+	reqMsg := new(greetv1.GreetRequest)
+	err := req.Msg.UnmarshalTo(reqMsg)
+	if err != nil {
+		return nil, err
+	}
+	resMsg, err := anypb.New(&greetv1.GreetResponse{
+        Greeting: fmt.Sprintf("Hello, %s!", reqMsg.Name),
     })
 	if err != nil {
 		return nil, err
 	}
-    res := connect.NewResponse(any)
+    res := connect.NewResponse(resMsg)
     res.Header().Set("Greet-Version", "v1")
     return res, nil
 }
