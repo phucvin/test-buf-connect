@@ -6,6 +6,23 @@ option go_package = "testbufconnect/gen/anyservice;anyservice";
 
 import "google/protobuf/any.proto";
 
+message MetaRequest {
+  google.protobuf.Any request = 1;
+  Route route = 2;
+}
+
+enum LocationType {
+  LOCATION_TYPE_UNSPECIFIED = 0;
+  GLOBAL = 1;
+  REGION = 2;
+  ZONE = 3;
+}
+
+message Route {
+  LocationType location_type = 1;
+  string location_name = 2;
+}
+
 service AnyService {
   rpc Call(google.protobuf.Any) returns (google.protobuf.Any) {}
 }

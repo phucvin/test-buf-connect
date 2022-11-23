@@ -11,6 +11,7 @@ import (
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	anypb "google.golang.org/protobuf/types/known/anypb"
 	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -20,6 +21,168 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type LocationType int32
+
+const (
+	LocationType_LOCATION_TYPE_UNSPECIFIED LocationType = 0
+	LocationType_GLOBAL                    LocationType = 1
+	LocationType_REGION                    LocationType = 2
+	LocationType_ZONE                      LocationType = 3
+)
+
+// Enum value maps for LocationType.
+var (
+	LocationType_name = map[int32]string{
+		0: "LOCATION_TYPE_UNSPECIFIED",
+		1: "GLOBAL",
+		2: "REGION",
+		3: "ZONE",
+	}
+	LocationType_value = map[string]int32{
+		"LOCATION_TYPE_UNSPECIFIED": 0,
+		"GLOBAL":                    1,
+		"REGION":                    2,
+		"ZONE":                      3,
+	}
+)
+
+func (x LocationType) Enum() *LocationType {
+	p := new(LocationType)
+	*p = x
+	return p
+}
+
+func (x LocationType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (LocationType) Descriptor() protoreflect.EnumDescriptor {
+	return file_anyservice_anyservice_proto_enumTypes[0].Descriptor()
+}
+
+func (LocationType) Type() protoreflect.EnumType {
+	return &file_anyservice_anyservice_proto_enumTypes[0]
+}
+
+func (x LocationType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use LocationType.Descriptor instead.
+func (LocationType) EnumDescriptor() ([]byte, []int) {
+	return file_anyservice_anyservice_proto_rawDescGZIP(), []int{0}
+}
+
+type MetaRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Request *anypb.Any `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
+	Route   *Route     `protobuf:"bytes,2,opt,name=route,proto3" json:"route,omitempty"`
+}
+
+func (x *MetaRequest) Reset() {
+	*x = MetaRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_anyservice_anyservice_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MetaRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MetaRequest) ProtoMessage() {}
+
+func (x *MetaRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_anyservice_anyservice_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MetaRequest.ProtoReflect.Descriptor instead.
+func (*MetaRequest) Descriptor() ([]byte, []int) {
+	return file_anyservice_anyservice_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *MetaRequest) GetRequest() *anypb.Any {
+	if x != nil {
+		return x.Request
+	}
+	return nil
+}
+
+func (x *MetaRequest) GetRoute() *Route {
+	if x != nil {
+		return x.Route
+	}
+	return nil
+}
+
+type Route struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	LocationType LocationType `protobuf:"varint,1,opt,name=location_type,json=locationType,proto3,enum=anyservice.LocationType" json:"location_type,omitempty"`
+	LocationName string       `protobuf:"bytes,2,opt,name=location_name,json=locationName,proto3" json:"location_name,omitempty"`
+}
+
+func (x *Route) Reset() {
+	*x = Route{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_anyservice_anyservice_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Route) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Route) ProtoMessage() {}
+
+func (x *Route) ProtoReflect() protoreflect.Message {
+	mi := &file_anyservice_anyservice_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Route.ProtoReflect.Descriptor instead.
+func (*Route) Descriptor() ([]byte, []int) {
+	return file_anyservice_anyservice_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Route) GetLocationType() LocationType {
+	if x != nil {
+		return x.LocationType
+	}
+	return LocationType_LOCATION_TYPE_UNSPECIFIED
+}
+
+func (x *Route) GetLocationName() string {
+	if x != nil {
+		return x.LocationName
+	}
+	return ""
+}
+
 var File_anyservice_anyservice_proto protoreflect.FileDescriptor
 
 var file_anyservice_anyservice_proto_rawDesc = []byte{
@@ -27,27 +190,66 @@ var file_anyservice_anyservice_proto_rawDesc = []byte{
 	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0a, 0x61,
 	0x6e, 0x79, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x1a, 0x19, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
 	0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x61, 0x6e, 0x79, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x32, 0x42, 0x0a, 0x0a, 0x41, 0x6e, 0x79, 0x53, 0x65, 0x72, 0x76, 0x69,
-	0x63, 0x65, 0x12, 0x34, 0x0a, 0x04, 0x43, 0x61, 0x6c, 0x6c, 0x12, 0x14, 0x2e, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x41, 0x6e, 0x79,
-	0x1a, 0x14, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
-	0x75, 0x66, 0x2e, 0x41, 0x6e, 0x79, 0x22, 0x00, 0x42, 0x2a, 0x5a, 0x28, 0x74, 0x65, 0x73, 0x74,
-	0x62, 0x75, 0x66, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x2f, 0x67, 0x65, 0x6e, 0x2f, 0x61,
-	0x6e, 0x79, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x3b, 0x61, 0x6e, 0x79, 0x73, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x6f, 0x74, 0x6f, 0x22, 0x66, 0x0a, 0x0b, 0x4d, 0x65, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x2e, 0x0a, 0x07, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x41, 0x6e, 0x79, 0x52, 0x07, 0x72, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x27, 0x0a, 0x05, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x11, 0x2e, 0x61, 0x6e, 0x79, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e,
+	0x52, 0x6f, 0x75, 0x74, 0x65, 0x52, 0x05, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x22, 0x6b, 0x0a, 0x05,
+	0x52, 0x6f, 0x75, 0x74, 0x65, 0x12, 0x3d, 0x0a, 0x0d, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x18, 0x2e, 0x61,
+	0x6e, 0x79, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x4c, 0x6f, 0x63, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x52, 0x0c, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x54, 0x79, 0x70, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6c, 0x6f, 0x63,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x2a, 0x4f, 0x0a, 0x0c, 0x4c, 0x6f, 0x63,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1d, 0x0a, 0x19, 0x4c, 0x4f, 0x43,
+	0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45,
+	0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x47, 0x4c, 0x4f, 0x42,
+	0x41, 0x4c, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x52, 0x45, 0x47, 0x49, 0x4f, 0x4e, 0x10, 0x02,
+	0x12, 0x08, 0x0a, 0x04, 0x5a, 0x4f, 0x4e, 0x45, 0x10, 0x03, 0x32, 0x42, 0x0a, 0x0a, 0x41, 0x6e,
+	0x79, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x34, 0x0a, 0x04, 0x43, 0x61, 0x6c, 0x6c,
+	0x12, 0x14, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2e, 0x41, 0x6e, 0x79, 0x1a, 0x14, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x41, 0x6e, 0x79, 0x22, 0x00, 0x42, 0x2a,
+	0x5a, 0x28, 0x74, 0x65, 0x73, 0x74, 0x62, 0x75, 0x66, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74,
+	0x2f, 0x67, 0x65, 0x6e, 0x2f, 0x61, 0x6e, 0x79, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x3b,
+	0x61, 0x6e, 0x79, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
+var (
+	file_anyservice_anyservice_proto_rawDescOnce sync.Once
+	file_anyservice_anyservice_proto_rawDescData = file_anyservice_anyservice_proto_rawDesc
+)
+
+func file_anyservice_anyservice_proto_rawDescGZIP() []byte {
+	file_anyservice_anyservice_proto_rawDescOnce.Do(func() {
+		file_anyservice_anyservice_proto_rawDescData = protoimpl.X.CompressGZIP(file_anyservice_anyservice_proto_rawDescData)
+	})
+	return file_anyservice_anyservice_proto_rawDescData
+}
+
+var file_anyservice_anyservice_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_anyservice_anyservice_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_anyservice_anyservice_proto_goTypes = []interface{}{
-	(*anypb.Any)(nil), // 0: google.protobuf.Any
+	(LocationType)(0),   // 0: anyservice.LocationType
+	(*MetaRequest)(nil), // 1: anyservice.MetaRequest
+	(*Route)(nil),       // 2: anyservice.Route
+	(*anypb.Any)(nil),   // 3: google.protobuf.Any
 }
 var file_anyservice_anyservice_proto_depIdxs = []int32{
-	0, // 0: anyservice.AnyService.Call:input_type -> google.protobuf.Any
-	0, // 1: anyservice.AnyService.Call:output_type -> google.protobuf.Any
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	3, // 0: anyservice.MetaRequest.request:type_name -> google.protobuf.Any
+	2, // 1: anyservice.MetaRequest.route:type_name -> anyservice.Route
+	0, // 2: anyservice.Route.location_type:type_name -> anyservice.LocationType
+	3, // 3: anyservice.AnyService.Call:input_type -> google.protobuf.Any
+	3, // 4: anyservice.AnyService.Call:output_type -> google.protobuf.Any
+	4, // [4:5] is the sub-list for method output_type
+	3, // [3:4] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_anyservice_anyservice_proto_init() }
@@ -55,18 +257,46 @@ func file_anyservice_anyservice_proto_init() {
 	if File_anyservice_anyservice_proto != nil {
 		return
 	}
+	if !protoimpl.UnsafeEnabled {
+		file_anyservice_anyservice_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MetaRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_anyservice_anyservice_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Route); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_anyservice_anyservice_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   0,
+			NumEnums:      1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_anyservice_anyservice_proto_goTypes,
 		DependencyIndexes: file_anyservice_anyservice_proto_depIdxs,
+		EnumInfos:         file_anyservice_anyservice_proto_enumTypes,
+		MessageInfos:      file_anyservice_anyservice_proto_msgTypes,
 	}.Build()
 	File_anyservice_anyservice_proto = out.File
 	file_anyservice_anyservice_proto_rawDesc = nil
