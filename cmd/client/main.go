@@ -14,7 +14,7 @@ import (
 	"github.com/bufbuild/connect-go"
 )
 
-func call(client anyserviceconnect.ServiceClient, req protoreflect.ProtoMessage, res protoreflect.ProtoMessage) error {
+func call(client anyserviceconnect.AnyServiceClient, req protoreflect.ProtoMessage, res protoreflect.ProtoMessage) error {
 	reqMsg, err := anypb.New(req)
 	if err != nil {
 		return err
@@ -34,7 +34,7 @@ func call(client anyserviceconnect.ServiceClient, req protoreflect.ProtoMessage,
 }
 
 func main() {
-	client := anyserviceconnect.NewServiceClient(
+	client := anyserviceconnect.NewAnyServiceClient(
 		http.DefaultClient,
 		"http://localhost:8080",
 	)

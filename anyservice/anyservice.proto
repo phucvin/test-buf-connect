@@ -6,6 +6,6 @@ option go_package = "testbufconnect/gen/anyservice;anyservice";
 
 import "google/protobuf/any.proto";
 
-service Service {
+service AnyService {
   rpc Call(google.protobuf.Any) returns (google.protobuf.Any) {}
 }

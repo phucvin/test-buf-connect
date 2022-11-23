@@ -21,66 +21,66 @@ import (
 const _ = connect_go.IsAtLeastVersion0_1_0
 
 const (
-	// ServiceName is the fully-qualified name of the Service service.
-	ServiceName = "anyservice.Service"
+	// AnyServiceName is the fully-qualified name of the AnyService service.
+	AnyServiceName = "anyservice.AnyService"
 )
 
-// ServiceClient is a client for the anyservice.Service service.
-type ServiceClient interface {
+// AnyServiceClient is a client for the anyservice.AnyService service.
+type AnyServiceClient interface {
 	Call(context.Context, *connect_go.Request[anypb.Any]) (*connect_go.Response[anypb.Any], error)
 }
 
-// NewServiceClient constructs a client for the anyservice.Service service. By default, it uses the
-// Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
+// NewAnyServiceClient constructs a client for the anyservice.AnyService service. By default, it
+// uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
 // uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or
 // connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
-func NewServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) ServiceClient {
+func NewAnyServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) AnyServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &serviceClient{
+	return &anyServiceClient{
 		call: connect_go.NewClient[anypb.Any, anypb.Any](
 			httpClient,
-			baseURL+"/anyservice.Service/Call",
+			baseURL+"/anyservice.AnyService/Call",
 			opts...,
 		),
 	}
 }
 
-// serviceClient implements ServiceClient.
-type serviceClient struct {
+// anyServiceClient implements AnyServiceClient.
+type anyServiceClient struct {
 	call *connect_go.Client[anypb.Any, anypb.Any]
 }
 
-// Call calls anyservice.Service.Call.
-func (c *serviceClient) Call(ctx context.Context, req *connect_go.Request[anypb.Any]) (*connect_go.Response[anypb.Any], error) {
+// Call calls anyservice.AnyService.Call.
+func (c *anyServiceClient) Call(ctx context.Context, req *connect_go.Request[anypb.Any]) (*connect_go.Response[anypb.Any], error) {
 	return c.call.CallUnary(ctx, req)
 }
 
-// ServiceHandler is an implementation of the anyservice.Service service.
-type ServiceHandler interface {
+// AnyServiceHandler is an implementation of the anyservice.AnyService service.
+type AnyServiceHandler interface {
 	Call(context.Context, *connect_go.Request[anypb.Any]) (*connect_go.Response[anypb.Any], error)
 }
 
-// NewServiceHandler builds an HTTP handler from the service implementation. It returns the path on
-// which to mount the handler and the handler itself.
+// NewAnyServiceHandler builds an HTTP handler from the service implementation. It returns the path
+// on which to mount the handler and the handler itself.
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
-func NewServiceHandler(svc ServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
+func NewAnyServiceHandler(svc AnyServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
 	mux := http.NewServeMux()
-	mux.Handle("/anyservice.Service/Call", connect_go.NewUnaryHandler(
-		"/anyservice.Service/Call",
+	mux.Handle("/anyservice.AnyService/Call", connect_go.NewUnaryHandler(
+		"/anyservice.AnyService/Call",
 		svc.Call,
 		opts...,
 	))
-	return "/anyservice.Service/", mux
+	return "/anyservice.AnyService/", mux
 }
 
-// UnimplementedServiceHandler returns CodeUnimplemented from all methods.
-type UnimplementedServiceHandler struct{}
+// UnimplementedAnyServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedAnyServiceHandler struct{}
 
-func (UnimplementedServiceHandler) Call(context.Context, *connect_go.Request[anypb.Any]) (*connect_go.Response[anypb.Any], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("anyservice.Service.Call is not implemented"))
+func (UnimplementedAnyServiceHandler) Call(context.Context, *connect_go.Request[anypb.Any]) (*connect_go.Response[anypb.Any], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("anyservice.AnyService.Call is not implemented"))
 }
