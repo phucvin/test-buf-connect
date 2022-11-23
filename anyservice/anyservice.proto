@@ -6,14 +6,6 @@ option go_package = "testbufconnect/gen/anyservice;anyservice";
 
 import "google/protobuf/any.proto";
 
-message GreetRequest {
-  string name = 1;
-}
-
-message GreetResponse {
-  string greeting = 1;
-}
-
 service Service {
   rpc Call(google.protobuf.Any) returns (google.protobuf.Any) {}
 }

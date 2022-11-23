@@ -8,8 +8,8 @@ import (
 	"google.golang.org/protobuf/types/known/anypb"
 
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	anyservice "testbufconnect/gen/anyservice"
 	"testbufconnect/gen/anyservice/anyserviceconnect"
+	greetv1 "testbufconnect/gen/greet/v1"
 
 	"github.com/bufbuild/connect-go"
 )
@@ -38,8 +38,8 @@ func main() {
 		http.DefaultClient,
 		"http://localhost:8080",
 	)
-	res := new(anyservice.GreetResponse)
-	err := call(client, &anyservice.GreetRequest{
+	res := new(greetv1.GreetResponse)
+	err := call(client, &greetv1.GreetRequest{
 		Name: "Bob",
 	}, res)
 	if err != nil {

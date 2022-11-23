@@ -1,0 +1,14 @@
+
+syntax = "proto3";
+
+package greet.v1;
+
+option go_package = "testbufconnect/gen/greet/v1;greetv1";
+
+message GreetRequest {
+  string name = 1;
+}
+
+message GreetResponse {
+  string greeting = 1;
+}
